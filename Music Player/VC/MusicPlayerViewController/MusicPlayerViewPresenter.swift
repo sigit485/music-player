@@ -211,6 +211,7 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
             MusicPlayer.sharedInstance.stop()
             MusicPlayer.sharedInstance.setSong(url: url)
             
+            //note: diberi delay karena saat pindah ke queue selanjutnya terjadi masalah pada player (lagu tidak play) yg menyebabkan player harus toggle music playernya, untuk menangani hal tersebut maka dibuat delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
                 MusicPlayer.sharedInstance.play()
             })
