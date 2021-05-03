@@ -15,6 +15,14 @@ class MusicPlayerPresenter {
     
     init(controller: PrivateMusicPlayerRule) {
         self.controller = controller
+        
+        do {
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, policy: .default, options: .mixWithOthers)
+        } catch let error {
+            print("AVAudioSession error: \(error)")
+        }
+        
     }
     
 }
