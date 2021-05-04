@@ -329,6 +329,68 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
         
     }
     
+    func closePanelMusicPlayer_WithAnimation(frame:CGRect,isFinish:@escaping (Bool)->()) {
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: [.allowUserInteraction], animations: {
+            self.view?.setViewClosePanel(frame: frame)
+        }, completion: { isFinished in
+            isFinish(isFinished)
+        })
+    }
+    
+    func maximizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinish: @escaping (Bool)->()) {
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: [.allowUserInteraction], animations: {
+            self.view?.setMaximizePanel(frame: frame)
+        }, completion: { isFinished in
+            isFinish(isFinished)
+        })
+    }
+    
+    func minimizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinish:@escaping (Bool)->()) {
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: [.allowUserInteraction], animations: {
+            self.view?.setMinimizePanel(frame: frame)
+        }, completion: { isFinished in
+            isFinish(isFinished)
+        })
+    }
+    
+    func maximizePanelController(frame:CGRect,animated: Bool, duration: Double, completion: (() -> Void)?){
+        
+        if animated {
+            maximizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { isFinished in
+                guard isFinished else {
+                    return
+                }
+                self.view?.setPanelState(state: .isMaximize)
+                completion?()
+            })
+            
+        }
+        else {
+            self.view?.setMaximizePanel(frame: frame)
+            self.view?.setPanelState(state: .isMaximize)
+            completion?()
+        }
+        
+    }
+    
+    func minimizePanelController(frame:CGRect,animated: Bool, duration: Double, completion: (() -> Void)?){
+        
+        if animated {
+            minimizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { isFinished in
+                guard isFinished else {
+                    return
+                }
+                self.view?.setPanelState(state: .isMinimize)
+                completion?()
+            })
+        } else {
+            self.view?.setMinimizePanel(frame: frame)
+            self.view?.setPanelState(state: .isMinimize)
+            completion?()
+        }
+        
+    }
+    
 }
 
 extension MusicPlayerViewPresenter: PlayerDelegate {

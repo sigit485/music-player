@@ -21,8 +21,8 @@ enum MusicPlayerViewControllerPanelIntiateState {
 }
 
 protocol MusicPlayerViewControllerPanelProtocol {
-    func maximizePanelController(animated: Bool, duration: Double, completion: (() -> Void)?)
-    func minimizePanelController(animated: Bool, duration: Double, completion: (() -> Void)?)
+    func maximizePanelController(animated: Bool, duration: Double, completions: (() -> Void)?)
+    func minimizePanelController(animated: Bool, duration: Double, completions: (() -> Void)?)
     func closePanelController(animated: Bool, completion: (() -> Void)?)
     func initiatePanelController(animated: Bool, completion: (() -> Void)?)
     func setHiddenPanelView(_ willHidden: Bool)

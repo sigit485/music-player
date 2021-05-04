@@ -324,7 +324,7 @@ extension HomeViewController {
     }
     
     @objc private func showMusicPlayer() {
-        (musicPlayerView as? MusicPlayerViewController)?.maximizePanelController(animated: true, duration: 0.5, completion: nil)
+        (musicPlayerView as? MusicPlayerViewController)?.maximizePanelController(animated: true, duration: 0.5, completions: nil)
     }
     
     private func setImage(image:String) {

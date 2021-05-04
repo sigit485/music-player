@@ -92,7 +92,7 @@ class MusicPlayerViewController: UIViewController {
         closePanelController(animated: false, completion: nil)
         
         tabBar.closeMusicPlayer = {
-            self.minimizePanelController(animated: true, duration: 0.5, completion: nil)
+            self.minimizePanelController(animated: true, duration: 0.5, completions: nil)
         }
         
         tabBar.showQueue = {
@@ -320,41 +320,35 @@ extension MusicPlayerViewController {
 }
 
 extension MusicPlayerViewController: MusicPlayerViewControllerPanelProtocol {
-    func maximizePanelController(animated: Bool, duration: Double, completion: (() -> Void)?) {
+    func maximizePanelController(animated: Bool, duration: Double, completions: (() -> Void)?) {
         let frame = UIScreen.main.bounds
         view.alpha = 1
-        if animated {
-            maximizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { isFinished in
-                guard isFinished else {
-                    return
-                }
-                self.setPanelState(state: .isMaximize)
-                completion?()
-            })
-            
-        }
-        else {
-            setMaximizePanel(frame: frame)
-            self.setPanelState(state: .isMaximize)
-            completion?()
-        }
+        
+        presenter?.maximizePanelController(frame: frame, animated: animated, duration: duration, completion: {
+            completions?()
+        })
     }
     
-    func minimizePanelController(animated: Bool, duration: Double, completion: (() -> Void)?) {
+    func minimizePanelController(animated: Bool, duration: Double, completions: (() -> Void)?) {
         let frame = UIScreen.main.bounds
-        if animated {
-            minimizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { isFinished in
-                guard isFinished else {
-                    return
-                }
-                self.setPanelState(state: .isMinimize)
-                completion?()
-            })
-        } else {
-            setMinimizePanel(frame: frame)
-            self.setPanelState(state: .isMinimize)
-            completion?()
-        }
+        
+        presenter?.minimizePanelController(frame: frame, animated: animated, duration: duration, completion: {
+            completions?()
+        })
+        
+//        if animated {
+//            minimizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { isFinished in
+//                guard isFinished else {
+//                    return
+//                }
+//                self.setPanelState(state: .isMinimize)
+//                completion?()
+//            })
+//        } else {
+//            setMinimizePanel(frame: frame)
+//            self.setPanelState(state: .isMinimize)
+//            completion?()
+//        }
     }
     
     func closePanelController(animated: Bool, completion: (() -> Void)?) {
@@ -365,7 +359,7 @@ extension MusicPlayerViewController: MusicPlayerViewControllerPanelProtocol {
     
     func initiatePanelController(animated: Bool, completion: (() -> Void)?) {
         panelInitiateState = .initiated
-        minimizePanelController(animated: animated, duration: 0.3, completion: {[weak self] in
+        minimizePanelController(animated: animated, duration: 0.3, completions: {[weak self] in
             
         })
         
@@ -385,11 +379,9 @@ extension MusicPlayerViewController: MusicPlayerViewControllerPanelProtocol {
 }
 
 extension MusicPlayerViewController {
-    func closePanelMusicPlayer_WithAnimation(frame:CGRect,isFinish:@escaping (Bool)->()) {
-        UIView.animateKeyframes(withDuration: 0.3, delay: 0.0, options: [.allowUserInteraction], animations: {
-            self.setViewClosePanel(frame:frame)
-        }, completion: { isFinished in
-            isFinish(isFinished)
+    func closePanelMusicPlayer_WithAnimation(frame:CGRect,isFinished:@escaping (Bool)->()) {
+        presenter?.closePanelMusicPlayer_WithAnimation(frame: frame, isFinish: { finish in
+            isFinished(finish)
         })
     }
     
@@ -401,11 +393,9 @@ extension MusicPlayerViewController {
         print("close frame result: \(self.view.frame)")
     }
     
-    func maximizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinish: @escaping (Bool)->()) {
-        UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
-            self.setMaximizePanel(frame:frame)
-        }, completion: { isFinished in
-            isFinish(isFinished)
+    func maximizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinished: @escaping (Bool)->()) {
+        presenter?.maximizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { finish in
+            isFinished(finish)
         })
     }
     
@@ -416,11 +406,9 @@ extension MusicPlayerViewController {
         print("maximize frame result: \(self.view.frame)")
     }
     
-    func minimizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinish:@escaping (Bool)->()) {
-        UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
-            self.setMinimizePanel(frame:frame)
-        }, completion: { isFinished in
-            isFinish(isFinished)
+    func minimizePanelMusicPlayer_withAnimation(frame:CGRect,duration:Double,isFinished:@escaping (Bool)->()) {
+        presenter?.minimizePanelMusicPlayer_withAnimation(frame: frame, duration: duration, isFinish: { finish in
+            isFinished(finish)
         })
     }
     
