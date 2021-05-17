@@ -24,6 +24,19 @@ class TemplateManager: NSObject {
 //        carplayInterfaceController!.delegate = self
         sessionConfiguration = CPSessionConfiguration(delegate: self)
         
+        
+        let nowPlaying = CPNowPlayingTemplate.shared
+        
+        let rate = CPNowPlayingPlaybackRateButton(handler: { _ in
+            
+        })
+        
+        let more = CPNowPlayingMoreButton(handler: { _ in
+            
+        })
+        
+        nowPlaying.updateNowPlayingButtons([rate,more])
+        
         var tabTemplates = [CPTemplate]()
         
         
@@ -98,6 +111,8 @@ extension TemplateManager {
         
         
         let playlistTemp = CPListTemplate(title: "Home", sections: [CPListSection(items: listItems)])
+        playlistTemp.tabImage = #imageLiteral(resourceName: "home")
+        
         return playlistTemp
     }
 }
