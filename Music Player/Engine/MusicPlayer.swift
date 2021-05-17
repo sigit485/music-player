@@ -36,6 +36,7 @@ class MusicPlayer: NSObject, MusicPlayerSetupRule {
     
     static var sharedInstance: MusicPlayerRule = MusicPlayer()
     
+    private var nowPlaying = MediaCommandCenter()
     
     var updateDuration: (() -> ())? = nil
     var updateTimeElapsed: (() -> ())? = nil
@@ -47,6 +48,7 @@ class MusicPlayer: NSObject, MusicPlayerSetupRule {
         presenter = MusicPlayerPresenter(controller: self)
         presenterObserver = MusicPlayerObserverPresenter(controller: self)
         //player = AVPlayer()
+        nowPlaying.delegate = self
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -129,6 +131,10 @@ extension MusicPlayer: MusicPlayerRule {
         self.presenter?.toggle(state: isPlaying)
     }
     
+    
+    func getInfo(music:Music) {
+        nowPlaying.setMediaPlayerInfo(song: music)
+    }
     
 }
 
@@ -230,6 +236,31 @@ extension MusicPlayer: PrivateMusicPlayerObserverRule {
         playerDelegate?.updateDuration(time: duration)
         updateDuration?()
     }
+    
+}
+
+
+extension MusicPlayer: MediaCommandCenterDelegate {
+    func didNextTrack() {
+        
+    }
+    
+    func didPreviousTrack() {
+        
+    }
+    
+    func didPause() {
+        self.pause()
+    }
+    
+    func didPlay() {
+        self.play()
+    }
+    
+    func didTogglePlayPause() {
+        self.togglePlayPause()
+    }
+    
     
 }
 

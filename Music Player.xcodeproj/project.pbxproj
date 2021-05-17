@@ -10,6 +10,12 @@
 		0427EA3F26294A7100F48CC6 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0427EA3E26294A7100F48CC6 /* QueueViewController.swift */; };
 		0448E592261FFB6300789E6D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448E591261FFB6300789E6D /* HomeViewController.swift */; };
 		0448E595261FFB7900789E6D /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448E594261FFB7900789E6D /* MusicPlayerViewController.swift */; };
+		044EEEB62652B22700982488 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 044EEEB52652B22700982488 /* Entitlements.plist */; };
+		044EEEBA2652B3A400982488 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044EEEB92652B3A400982488 /* SceneDelegate.swift */; };
+		044EEEBD2652B43E00982488 /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044EEEBC2652B43E00982488 /* CarPlay.framework */; };
+		044EEEBF2652B59B00982488 /* MediaCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044EEEBE2652B59B00982488 /* MediaCommandCenter.swift */; };
+		044EEEC22652BA8000982488 /* TemplateApplicationSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044EEEC12652BA8000982488 /* TemplateApplicationSceneDelegate.swift */; };
+		044EEEC52652BD0400982488 /* TemplateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044EEEC42652BD0400982488 /* TemplateManager.swift */; };
 		044F16532625A53A0002C608 /* SubContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F16522625A53A0002C608 /* SubContentData.swift */; };
 		044F16572625D5550002C608 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F16562625D5550002C608 /* ItemCollectionViewCell.swift */; };
 		044F16692625D77F0002C608 /* MusicPlayerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F16652625D77F0002C608 /* MusicPlayerPresenter.swift */; };
@@ -53,6 +59,12 @@
 		0427EA3E26294A7100F48CC6 /* QueueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
 		0448E591261FFB6300789E6D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0448E594261FFB7900789E6D /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
+		044EEEB52652B22700982488 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		044EEEB92652B3A400982488 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		044EEEBC2652B43E00982488 /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
+		044EEEBE2652B59B00982488 /* MediaCommandCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCommandCenter.swift; sourceTree = "<group>"; };
+		044EEEC12652BA8000982488 /* TemplateApplicationSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateApplicationSceneDelegate.swift; sourceTree = "<group>"; };
+		044EEEC42652BD0400982488 /* TemplateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateManager.swift; sourceTree = "<group>"; };
 		044F16522625A53A0002C608 /* SubContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubContentData.swift; sourceTree = "<group>"; };
 		044F16562625D5550002C608 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		044F16652625D77F0002C608 /* MusicPlayerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerPresenter.swift; sourceTree = "<group>"; };
@@ -101,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044EEEBD2652B43E00982488 /* CarPlay.framework in Frameworks */,
 				FB720AC01D2D2DC6CFE76AD9 /* Pods_Music_Player.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +158,7 @@
 				044F16662625D77F0002C608 /* MusicPlayerObserverPresenter.swift */,
 				044F16652625D77F0002C608 /* MusicPlayerPresenter.swift */,
 				044F16672625D77F0002C608 /* MusicPlayerRule.swift */,
+				044EEEBE2652B59B00982488 /* MediaCommandCenter.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -316,6 +330,7 @@
 		04EC8313261F0051004BC444 /* Music Player */ = {
 			isa = PBXGroup;
 			children = (
+				044EEEB52652B22700982488 /* Entitlements.plist */,
 				044F16592625D6480002C608 /* Engine */,
 				047F022726246C4300244514 /* DataSource */,
 				047F01F8262461A000244514 /* Model */,
@@ -329,6 +344,9 @@
 				04EC8322261F0053004BC444 /* LaunchScreen.storyboard */,
 				04EC8325261F0053004BC444 /* Info.plist */,
 				04EC831D261F0051004BC444 /* Music_Player.xcdatamodeld */,
+				044EEEB92652B3A400982488 /* SceneDelegate.swift */,
+				044EEEC12652BA8000982488 /* TemplateApplicationSceneDelegate.swift */,
+				044EEEC42652BD0400982488 /* TemplateManager.swift */,
 			);
 			path = "Music Player";
 			sourceTree = "<group>";
@@ -345,6 +363,7 @@
 		A246ED70B31B290993660608 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				044EEEBC2652B43E00982488 /* CarPlay.framework */,
 				E433BE94E426CE470B941C4A /* Pods_Music_Player.framework */,
 			);
 			name = Frameworks;
@@ -409,6 +428,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044EEEB62652B22700982488 /* Entitlements.plist in Resources */,
 				04EC8324261F0053004BC444 /* LaunchScreen.storyboard in Resources */,
 				04EC8321261F0053004BC444 /* Assets.xcassets in Resources */,
 				04EC831C261F0051004BC444 /* Main.storyboard in Resources */,
@@ -467,6 +487,8 @@
 				04AAECF726315DF600524ADC /* NowPlayingCollectionViewCell.swift in Sources */,
 				044F16692625D77F0002C608 /* MusicPlayerPresenter.swift in Sources */,
 				0469A8722628650900D62FEF /* UIImageView.swift in Sources */,
+				044EEEC22652BA8000982488 /* TemplateApplicationSceneDelegate.swift in Sources */,
+				044EEEBF2652B59B00982488 /* MediaCommandCenter.swift in Sources */,
 				047F01F12624454000244514 /* Int.swift in Sources */,
 				04EC8319261F0051004BC444 /* ViewController.swift in Sources */,
 				049DEB172630001B00F04A43 /* QueueViewPresenter.swift in Sources */,
@@ -477,6 +499,7 @@
 				04AE61E026287F6600F9FD8E /* MusicPlayerConfiguration.swift in Sources */,
 				044F166B2625D77F0002C608 /* MusicPlayerRule.swift in Sources */,
 				047F01FD2624636100244514 /* Repo.swift in Sources */,
+				044EEEC52652BD0400982488 /* TemplateManager.swift in Sources */,
 				04AAECEF26314F3B00524ADC /* MusicPlayerViewPresenter.swift in Sources */,
 				047F022E26246F2A00244514 /* CoreDataMusicProtocol.swift in Sources */,
 				0448E595261FFB7900789E6D /* MusicPlayerViewController.swift in Sources */,
@@ -488,6 +511,7 @@
 				044F16532625A53A0002C608 /* SubContentData.swift in Sources */,
 				047F01F52624512B00244514 /* SubContent.swift in Sources */,
 				044F16572625D5550002C608 /* ItemCollectionViewCell.swift in Sources */,
+				044EEEBA2652B3A400982488 /* SceneDelegate.swift in Sources */,
 				0469A86E26284DD600D62FEF /* ViewInfo.swift in Sources */,
 				04AAECF326314F4700524ADC /* MusicPlayerViewPresenterRule.swift in Sources */,
 				048223C7262F05DE0033DCF2 /* HomeViewPresenter.swift in Sources */,
@@ -647,6 +671,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "$(SOURCE_ROOT)/Music Player/Entitlements.plist";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9Y26B6GZB;
 				INFOPLIST_FILE = "Music Player/Info.plist";
@@ -667,6 +692,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "$(SOURCE_ROOT)/Music Player/Entitlements.plist";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9Y26B6GZB;
 				INFOPLIST_FILE = "Music Player/Info.plist";

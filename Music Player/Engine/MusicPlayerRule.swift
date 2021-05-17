@@ -40,6 +40,7 @@ protocol MusicPlayerRule {
     func togglePlayPause()
     func getDuration() -> Double?
     func getTimeElapsed() -> Double?
+    func getInfo(music:Music)
     var updateDuration: (() -> ())? {get set}
     var updateTimeElapsed: (() -> ())? {get set}
     var updateState: ((PlayerState) -> ())? {get set}
