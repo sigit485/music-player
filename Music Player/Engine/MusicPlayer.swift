@@ -49,6 +49,12 @@ class MusicPlayer: NSObject, MusicPlayerSetupRule {
         presenterObserver = MusicPlayerObserverPresenter(controller: self)
         //player = AVPlayer()
         nowPlaying.delegate = self
+        
+        self.updateTimeElapsed = { [weak self] in
+            self?.nowPlaying.updatePlayback(currentProgress: Float(self?.getTimeElapsed() ?? 0), expectedDuration: Float(self?.getDuration() ?? 0))
+
+        }
+        
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
