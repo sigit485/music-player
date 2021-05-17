@@ -57,7 +57,9 @@ class MediaCommandCenter: NSObject {
 extension MediaCommandCenter {
     func setMediaPlayerInfo(song:Music) {
         setMediaPlayerInfo(song: song, image: nil)
-        
+        if #available(iOS 13, *) {
+            MPNowPlayingInfoCenter.default().playbackState = .playing
+        }
     }
     
     
@@ -101,7 +103,7 @@ extension MediaCommandCenter {
         return mediaInfo
     }
     
-    fileprivate func reset() {
+    func reset() {
         nowMediaPlayerInfoCenter.nowPlayingInfo = [
             MPMediaItemPropertyTitle: "",
             MPMediaItemPropertyArtist: "",

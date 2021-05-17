@@ -44,6 +44,7 @@ class MusicPlayer: NSObject, MusicPlayerSetupRule {
     
     override init() {
         player = AVPlayer()
+        nowPlaying.reset()
         super.init()
         presenter = MusicPlayerPresenter(controller: self)
         presenterObserver = MusicPlayerObserverPresenter(controller: self)
