@@ -267,9 +267,11 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
                 self?.view?.getNowPlaying().reloadData()
                 self?.view?.getNowPlaying().scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
                 
-                let getFirstIndex:Music = list.first!
+                if let getFirstIndex:Music = list.first {
+                    self?.view?.setSongInfo(music: getFirstIndex)
+                }
                 //self?.url = getFirstIndex.url
-                self?.view?.setSongInfo(music: getFirstIndex)
+                
             }
         })
     }
