@@ -19,6 +19,12 @@ class TemplateManager: NSObject {
     /// The CarPlay session configuation contains information on restrictions for the specified interface.
     var sessionConfiguration: CPSessionConfiguration!
     
+    let albumImageCollection = [URL(string: "https://images-na.ssl-images-amazon.com/images/I/71TP7B9ta0L._SX522_.jpg"), URL(string: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg"), URL(string: "https://images.genius.com/86bb485f11d08b9afcd9da32504cac18.1000x1000x1.jpg")]
+    
+    let titleAlbumCollection = ["Gallow: To Virgint!!", "Gallow: Parkers", "SawanoHiroyuki[nZk]: BEST OF VOCAL WORKS [nZk] 2"]
+    
+    let albums = [Repo.gallow_TooVirginAlbum, Repo.gallow_ParkestAlbum, Repo.nZk_BestOfVocalWorks2Album]
+    
     /// Connects the root template to the CPInterfaceController.
     func connect(_ interfaceController: CPInterfaceController) {
         carplayInterfaceController = interfaceController
@@ -27,6 +33,11 @@ class TemplateManager: NSObject {
         
         
         let nowPlaying = CPNowPlayingTemplate.shared
+        nowPlaying.add(self)
+        
+        nowPlaying.isAlbumArtistButtonEnabled = true
+        nowPlaying.isUpNextButtonEnabled = true
+        nowPlaying.upNextTitle = "Option"
         
         let rate = CPNowPlayingPlaybackRateButton(handler: { _ in
             
@@ -59,13 +70,6 @@ class TemplateManager: NSObject {
         nowPlaying.updateNowPlayingButtons([rate,more,shuffle,repeatButton,imageButton,addLibrary,more2])
         
         var tabTemplates = [CPTemplate]()
-        
-        
-//        if #available(iOS 14.0, *) {
-//            playlistTemp.tabImage = UIImage(systemName: "list.star")
-//        } else {
-//            // Fallback on earlier versions
-//        }
         tabTemplates.append(self.displayHome())
         
         self.carplayInterfaceController!.delegate = self
@@ -108,68 +112,46 @@ extension TemplateManager: CPSessionConfigurationDelegate {
     }
 }
 
+extension TemplateManager: CPNowPlayingTemplateObserver {
+    func nowPlayingTemplateUpNextButtonTapped(_ nowPlayingTemplate: CPNowPlayingTemplate) {
+        print("option is tapped")
+    }
+    
+    func nowPlayingTemplateAlbumArtistButtonTapped(_ nowPlayingTemplate: CPNowPlayingTemplate) {
+        print("title album is tapped")
+    }
+}
+
 
 extension TemplateManager {
     private func displayHome() -> CPListTemplate {
+        
         var listItems = [CPListTemplateItem]()
+        var listRowItems = CPListImageRowItem()
+            
         
-        var list = [Music]()
-        list += Repo.nZk_BestOfVocalWorks2Album
-        list += Repo.gallow_ParkestAlbum
-        list += Repo.gallow_TooVirginAlbum
-        
-//        for song in list {
-//
-//            let aSong = CPListItem(text: song.title, detailText: song.artist)
-//            aSong.handler = { item,completion in
-//                MusicPlayer.sharedInstance.stop()
-//                MusicPlayer.sharedInstance.getInfo(music: song)
-//                MusicPlayer.sharedInstance.setSong(url: song.url)
-//                MusicPlayer.sharedInstance.play()
-//                self.carplayInterfaceController?.pushTemplate(CPNowPlayingTemplate.shared, animated: true, completion: nil)
-//                completion()
-//            }
-//
-//            listItems.append(aSong)
-//
-//        }
-        
-        let url_contentGallowTooVirgin = URL(string: "https://images-na.ssl-images-amazon.com/images/I/71TP7B9ta0L._SX522_.jpg")
-        let url_contentGallowParkers = URL(string: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg")
-        let url_content_nZk = URL(string: "https://images.genius.com/86bb485f11d08b9afcd9da32504cac18.1000x1000x1.jpg")
-        
-        let data_contentGallowTooVirgin = try? Data(contentsOf: url_contentGallowTooVirgin!)
-        
-        let data_contentGallowParkers = try? Data(contentsOf: url_contentGallowParkers!)
-        
-        let data_content_nZk = try? Data(contentsOf: url_content_nZk!)
-        
-        let image_contentGallowTooVirgin = (data_contentGallowTooVirgin != nil) ? UIImage(data: data_contentGallowTooVirgin!) : #imageLiteral(resourceName: "musicDefault")
-        let image_contentGallowParkers = (data_contentGallowParkers != nil) ? UIImage(data: data_contentGallowParkers!) : #imageLiteral(resourceName: "musicDefault")
-        let image_content_nZk = (data_content_nZk != nil) ? UIImage(data: data_content_nZk!) : #imageLiteral(resourceName: "musicDefault")
-        
-        let row_contentGallowTooVirgin = CPListImageRowItem(text: "Gallow: To Virgint!!", images: [ image_contentGallowTooVirgin ?? #imageLiteral(resourceName: "musicDefault") , image_contentGallowTooVirgin ?? #imageLiteral(resourceName: "musicDefault")])
-        row_contentGallowTooVirgin.handler = { item,completion in
-            self.carplayInterfaceController?.pushTemplate(self.dispaly_listSong(music: Repo.gallow_TooVirginAlbum, name: "Gallow: To Virgint!!", image: image_contentGallowTooVirgin), animated: true, completion: nil)
-            completion()
+        for (index, dataImage) in albumImageCollection.enumerated() {
+            
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: dataImage!)
+            } catch {
+                debugPrint("Error convert images URL to Data \(error)")
+            }
+            
+            let imageTemp = UIImage(data: data) ?? #imageLiteral(resourceName: "musicDefault")
+            listRowItems = CPListImageRowItem(text: titleAlbumCollection[index], images: [imageTemp])
+            
+            listRowItems.handler = { item, completion in
+                
+                self.carplayInterfaceController?.pushTemplate(self.dispaly_listSong(music: self.albums[index], name: self.titleAlbumCollection[index], image: imageTemp), animated: true, completion: nil)
+                completion()
+                
+            }
+            
+            listItems.append(listRowItems)
         }
-        
-        let row_contentGallowParkers = CPListImageRowItem(text: "Gallow: Parkers", images: [image_contentGallowParkers ?? #imageLiteral(resourceName: "musicDefault") ,image_contentGallowParkers ?? #imageLiteral(resourceName: "musicDefault")])
-        row_contentGallowParkers.handler = { item,completion in
-            self.carplayInterfaceController?.pushTemplate(self.dispaly_listSong(music: Repo.gallow_ParkestAlbum, name: "Gallow: Parkers", image: image_contentGallowParkers), animated: true, completion: nil)
-            completion()
-        }
-        
-        let row_content_nZk = CPListImageRowItem(text: "SawanoHiroyuki[nZk]: BEST OF VOCAL WORKS [nZk] 2", images: [image_content_nZk ?? #imageLiteral(resourceName: "musicDefault") ,image_content_nZk ?? #imageLiteral(resourceName: "musicDefault")])
-        row_content_nZk.handler = { item,completion in
-            self.carplayInterfaceController?.pushTemplate(self.dispaly_listSong(music: Repo.nZk_BestOfVocalWorks2Album, name: "SawanoHiroyuki[nZk]: BEST OF VOCAL WORKS [nZk] 2", image: image_content_nZk), animated: true, completion: nil)
-            completion()
-        }
-        
-        listItems.append(row_contentGallowTooVirgin)
-        listItems.append(row_contentGallowParkers)
-        listItems.append(row_content_nZk)
-        
         
         let playlistTemp = CPListTemplate(title: "Home", sections: [CPListSection(items: listItems)])
         playlistTemp.tabImage = #imageLiteral(resourceName: "home")
