@@ -68,12 +68,13 @@ class TemplateManager: NSObject {
         
         nowPlaying.updateNowPlayingButtons([rate,more,shuffle,repeatButton,imageButton,addLibrary,more2])
         
-        var tabTemplates = [CPTemplate]()
-        tabTemplates.append(self.displayHome())
+//        var tabTemplates = [CPTemplate]()
+        let tabBarTemplate = CPTabBarTemplate(templates: [displayHome(), gridTemplate()])
+//        tabTemplates.append(contentsOf: [displayHome(), gridTemplate()])
         
         self.carplayInterfaceController!.delegate = self
         if #available(iOS 14.0, *) {
-            self.carplayInterfaceController!.setRootTemplate(CPTabBarTemplate(templates: tabTemplates), animated: true, completion: nil)
+            self.carplayInterfaceController!.setRootTemplate(tabBarTemplate, animated: true, completion: nil)
         } else {
             // Fallback on earlier versions
         }
@@ -123,6 +124,24 @@ extension TemplateManager: CPNowPlayingTemplateObserver {
 
 
 extension TemplateManager {
+    
+    // MARK: - CPGridTemplate
+    func gridTemplate() -> CPGridTemplate {
+        
+        let imageAlbum = UIImage().fromData(url: albumImageCollection[0]!)
+        
+        let button = CPGridButton(titleVariants: ["Button"], image: imageAlbum.resizeImage(size: CGSize(width: 100, height: 100))) { (button) in
+            print("you pressed button \(button.titleVariants[0])")
+        }
+        let albums: CPGridTemplate = CPGridTemplate(title: "Albums", gridButtons: [button, button, button, button, button, button, button, button, button, button, button, button, button, button, button])
+        albums.tabTitle = "Albums"
+        albums.tabSystemItem = .topRated
+        
+        return albums
+    }
+    
+    
+    // MARK: - CPListTemplate
     private func displayHome() -> CPListTemplate {
         
         var listItems = [CPListTemplateItem]()
@@ -131,15 +150,9 @@ extension TemplateManager {
         
         for (index, dataImage) in albumImageCollection.enumerated() {
             
-            var data = Data()
+            guard let data = dataImage else { break }
             
-            do {
-                data = try Data(contentsOf: dataImage!)
-            } catch {
-                debugPrint("Error convert images URL to Data \(error)")
-            }
-            
-            let imageTemp = UIImage(data: data) ?? #imageLiteral(resourceName: "musicDefault")
+            let imageTemp = UIImage().fromData(url: data)
             listRowItems = CPListImageRowItem(text: titleAlbumCollection[index], images: [imageTemp])
             
             listRowItems.handler = { item, completion in
@@ -160,6 +173,7 @@ extension TemplateManager {
     }
     
     
+    // MARK: - CPListTemplate
     private func dispaly_listSong(music:[Music],name:String,image:UIImage? = nil) -> CPListTemplate {
         var listItems = [CPListTemplateItem]()
         
