@@ -90,6 +90,7 @@ extension MediaCommandCenter {
 }
 
 extension MediaCommandCenter {
+    
     fileprivate func getMediaPlayerInfo(song: Music, coverImage: UIImage?) -> [String:Any] {
         var mediaInfo:[String:Any] =  [
             MPMediaItemPropertyTitle: song.title,
@@ -98,7 +99,9 @@ extension MediaCommandCenter {
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1.0 as Float),
             ]
         if let image = coverImage {
-            mediaInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: image)
+            mediaInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (newSize) -> UIImage in
+                return image.resizeImage(size: newSize)
+            })
         }
         return mediaInfo
     }

@@ -163,7 +163,7 @@ extension MusicPlayerViewPresenter {
         reSetupCoreDataQueue()
         url = newMusic.url
         MusicPlayer.sharedInstance.stop()
-        MusicPlayer.sharedInstance.getInfo(music: newMusic)
+        MusicPlayer.sharedInstance.getInfo(music: newMusic, image: nil)
         MusicPlayer.sharedInstance.setSong(url: url)
         MusicPlayer.sharedInstance.play()
     }
@@ -210,7 +210,7 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
             reSetupCoreDataQueue()
             url = newMusic.url
             MusicPlayer.sharedInstance.stop()
-            MusicPlayer.sharedInstance.getInfo(music: newMusic)
+            MusicPlayer.sharedInstance.getInfo(music: newMusic, image: nil)
             MusicPlayer.sharedInstance.setSong(url: url)
             
             //note: diberi delay karena saat pindah ke queue selanjutnya terjadi masalah pada player (lagu tidak play) yg menyebabkan player harus toggle music playernya, untuk menangani hal tersebut maka dibuat delay
@@ -245,7 +245,7 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
             reSetupCoreDataQueue()
             url = newMusic.url
             MusicPlayer.sharedInstance.stop()
-            MusicPlayer.sharedInstance.getInfo(music: newMusic)
+            MusicPlayer.sharedInstance.getInfo(music: newMusic, image: nil)
             MusicPlayer.sharedInstance.setSong(url: url)
             MusicPlayer.sharedInstance.play()
         }
@@ -287,7 +287,7 @@ extension MusicPlayerViewPresenter: MusicPlayerViewPresenterRule {
                     
                     let getFirstIndex:Music = list.first!
                     self?.url = getFirstIndex.url
-                    MusicPlayer.sharedInstance.getInfo(music: getFirstIndex)
+                    MusicPlayer.sharedInstance.getInfo(music: getFirstIndex, image: nil)
                     MusicPlayer.sharedInstance.setSong(url: getFirstIndex.url)
                     MusicPlayer.sharedInstance.play()
                 }

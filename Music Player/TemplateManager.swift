@@ -5,8 +5,7 @@
 //  Created by Mac on 17/05/21.
 //
 
-import Foundation
-import Foundation
+import UIKit
 import CarPlay
 import Kingfisher
 
@@ -165,10 +164,10 @@ extension TemplateManager {
         var listItems = [CPListTemplateItem]()
         
         for song in music {
-            let aSong = CPListItem(text: song.title, detailText: song.artist, image: image)
+            let aSong = CPListItem(text: song.title, detailText: song.artist, image: image?.resizeImage(size: CGSize(width: 80, height: 80)))
             aSong.handler = { item,completion in
                 MusicPlayer.sharedInstance.stop()
-                MusicPlayer.sharedInstance.getInfo(music: song)
+                MusicPlayer.sharedInstance.getInfo(music: song, image: #imageLiteral(resourceName: "musicDefault"))
                 MusicPlayer.sharedInstance.setSong(url: song.url)
                 MusicPlayer.sharedInstance.play()
                 self.carplayInterfaceController?.pushTemplate(CPNowPlayingTemplate.shared, animated: true, completion: nil)

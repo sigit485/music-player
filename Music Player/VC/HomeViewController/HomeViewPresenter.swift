@@ -125,7 +125,7 @@ extension HomeViewPresenter: HomeViewMusicPlayerPresenterRule {
             
             DispatchQueue.main.async {
                 MusicPlayer.sharedInstance.stop()
-                MusicPlayer.sharedInstance.getInfo(music: music)
+                MusicPlayer.sharedInstance.getInfo(music: music, image: nil)
                 MusicPlayer.sharedInstance.setSong(url: music.url)
                 MusicPlayer.sharedInstance.play()
             }

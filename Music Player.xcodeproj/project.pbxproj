@@ -52,6 +52,7 @@
 		04EC831F261F0051004BC444 /* Music_Player.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04EC831D261F0051004BC444 /* Music_Player.xcdatamodeld */; };
 		04EC8321261F0053004BC444 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04EC8320261F0053004BC444 /* Assets.xcassets */; };
 		04EC8324261F0053004BC444 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04EC8322261F0053004BC444 /* LaunchScreen.storyboard */; };
+		CDC544C32655FFFF008C280C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC544C22655FFFF008C280C /* UIImage.swift */; };
 		FB720AC01D2D2DC6CFE76AD9 /* Pods_Music_Player.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E433BE94E426CE470B941C4A /* Pods_Music_Player.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		04EC8320261F0053004BC444 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04EC8323261F0053004BC444 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04EC8325261F0053004BC444 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CDC544C22655FFFF008C280C /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		CEFF69BEF10CBB61A0557F18 /* Pods-Music Player.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Music Player.debug.xcconfig"; path = "Target Support Files/Pods-Music Player/Pods-Music Player.debug.xcconfig"; sourceTree = "<group>"; };
 		E433BE94E426CE470B941C4A /* Pods_Music_Player.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Music_Player.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD83DE675B1F06F73E1BAC49 /* Pods-Music Player.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Music Player.release.xcconfig"; path = "Target Support Files/Pods-Music Player/Pods-Music Player.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				047F01F02624454000244514 /* Int.swift */,
 				04AE61DF26287F6600F9FD8E /* MusicPlayerConfiguration.swift */,
 				04AE61E22628827400F9FD8E /* DeviceType.swift */,
+				CDC544C22655FFFF008C280C /* UIImage.swift */,
 			);
 			path = Confiq;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				047F023226246F3700244514 /* CoreDataMusic.swift in Sources */,
 				044F16532625A53A0002C608 /* SubContentData.swift in Sources */,
 				047F01F52624512B00244514 /* SubContent.swift in Sources */,
+				CDC544C32655FFFF008C280C /* UIImage.swift in Sources */,
 				044F16572625D5550002C608 /* ItemCollectionViewCell.swift in Sources */,
 				044EEEBA2652B3A400982488 /* SceneDelegate.swift in Sources */,
 				0469A86E26284DD600D62FEF /* ViewInfo.swift in Sources */,

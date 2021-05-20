@@ -6,7 +6,7 @@
 //  Copyright © 2020 test. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import AVFoundation
 
 class MusicPlayer: NSObject, MusicPlayerSetupRule {
@@ -139,8 +139,8 @@ extension MusicPlayer: MusicPlayerRule {
     }
     
     
-    func getInfo(music:Music) {
-        nowPlaying.setMediaPlayerInfo(song: music)
+    func getInfo(music:Music, image: UIImage?) {
+        nowPlaying.setMediaPlayerInfo(song: music, image: image)
     }
     
 }

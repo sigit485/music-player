@@ -6,7 +6,7 @@
 //  Copyright © 2020 test. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import AVFoundation
 
 enum PlayerState {
@@ -40,7 +40,7 @@ protocol MusicPlayerRule {
     func togglePlayPause()
     func getDuration() -> Double?
     func getTimeElapsed() -> Double?
-    func getInfo(music:Music)
+    func getInfo(music:Music, image: UIImage?)
     var updateDuration: (() -> ())? {get set}
     var updateTimeElapsed: (() -> ())? {get set}
     var updateState: ((PlayerState) -> ())? {get set}
