@@ -20,7 +20,7 @@ class TemplateManager: NSObject {
     
     let albumImageCollection = [URL(string: "https://images-na.ssl-images-amazon.com/images/I/71TP7B9ta0L._SX522_.jpg"), URL(string: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg"), URL(string: "https://images.genius.com/86bb485f11d08b9afcd9da32504cac18.1000x1000x1.jpg")]
     
-    let titleAlbumCollection = ["Gallow: To Virgint!!", "Gallow: Parkers", "SawanoHiroyuki[nZk]: BEST OF VOCAL WORKS [nZk] 2"]
+    let titleAlbumCollection = ["Top Section","Playlist made for you", "Gallow: Parkers"]
     
     let albums = [Repo.gallow_TooVirginAlbum, Repo.gallow_ParkestAlbum, Repo.nZk_BestOfVocalWorks2Album]
     
@@ -31,53 +31,12 @@ class TemplateManager: NSObject {
         sessionConfiguration = CPSessionConfiguration(delegate: self)
         
         
-        let nowPlaying = CPNowPlayingTemplate.shared
-        nowPlaying.add(self)
-        
-        nowPlaying.isAlbumArtistButtonEnabled = true
-        nowPlaying.isUpNextButtonEnabled = true
-        nowPlaying.upNextTitle = "Option"
-        
-        let rate = CPNowPlayingPlaybackRateButton(handler: { _ in
-            
-        })
-        
-        let more = CPNowPlayingMoreButton(handler: { _ in
-            
-        })
-        
-        let shuffle = CPNowPlayingShuffleButton(handler: { _ in
-            
-        })
-        
-        let repeatButton = CPNowPlayingRepeatButton(handler: { _ in
-            
-        })
-        
-        let imageButton = CPNowPlayingImageButton(image: #imageLiteral(resourceName: "musicDefault"), handler: { _ in
-            
-        })
-        
-        let addLibrary = CPNowPlayingAddToLibraryButton(handler: { _ in
-            
-        })
-        
-        let more2 = CPNowPlayingMoreButton(handler: { _ in
-            
-        })
-        
-        nowPlaying.updateNowPlayingButtons([rate,more,shuffle,repeatButton,imageButton,addLibrary,more2])
-        
-//        var tabTemplates = [CPTemplate]()
         let tabBarTemplate = CPTabBarTemplate(templates: [displayHome(), gridTemplate()])
-//        tabTemplates.append(contentsOf: [displayHome(), gridTemplate()])
+        
+        nowPlayingTemplate()
         
         self.carplayInterfaceController!.delegate = self
-        if #available(iOS 14.0, *) {
-            self.carplayInterfaceController!.setRootTemplate(tabBarTemplate, animated: true, completion: nil)
-        } else {
-            // Fallback on earlier versions
-        }
+        self.carplayInterfaceController!.setRootTemplate(tabBarTemplate, animated: true, completion: nil)
     }
     
     func disconnect() {
@@ -153,13 +112,18 @@ extension TemplateManager {
             guard let data = dataImage else { break }
             
             let imageTemp = UIImage().fromData(url: data)
-            listRowItems = CPListImageRowItem(text: titleAlbumCollection[index], images: [imageTemp])
+            listRowItems = CPListImageRowItem(text: titleAlbumCollection[index], images: [imageTemp, imageTemp, imageTemp, imageTemp, imageTemp, imageTemp, imageTemp, imageTemp, imageTemp, imageTemp])
             
             listRowItems.handler = { item, completion in
                 
                 self.carplayInterfaceController?.pushTemplate(self.dispaly_listSong(music: self.albums[index], name: self.titleAlbumCollection[index], image: imageTemp), animated: true, completion: nil)
                 completion()
                 
+            }
+            
+            listRowItems.listImageRowHandler = { item, index, completion in
+                print("Selected artwork at index \(index)")
+                completion()
             }
             
             listItems.append(listRowItems)
@@ -184,6 +148,7 @@ extension TemplateManager {
                 MusicPlayer.sharedInstance.getInfo(music: song, image: #imageLiteral(resourceName: "musicDefault"))
                 MusicPlayer.sharedInstance.setSong(url: song.url)
                 MusicPlayer.sharedInstance.play()
+                aSong.isPlaying = true
                 self.carplayInterfaceController?.pushTemplate(CPNowPlayingTemplate.shared, animated: true, completion: nil)
                 completion()
             }
@@ -196,6 +161,49 @@ extension TemplateManager {
         print("CPListTemplate.maximumItemCount: \(CPListTemplate.maximumItemCount)")
         print("CPListTemplate.maximumSectionCount: \(CPListTemplate.maximumSectionCount)")
         return playlistTemp
+        
+    }
+    
+    // MARK: - CPNowPlayingTemplate
+    private func nowPlayingTemplate() {
+        
+        let nowPlaying = CPNowPlayingTemplate.shared
+        
+        nowPlaying.add(self)
+        
+        nowPlaying.isAlbumArtistButtonEnabled = true
+        nowPlaying.isUpNextButtonEnabled = true
+        nowPlaying.upNextTitle = "Option"
+        
+        let rate = CPNowPlayingPlaybackRateButton(handler: { _ in
+            
+        })
+        
+        let more = CPNowPlayingMoreButton(handler: { _ in
+            
+        })
+        
+        let shuffle = CPNowPlayingShuffleButton(handler: { _ in
+            
+        })
+        
+        let repeatButton = CPNowPlayingRepeatButton(handler: { _ in
+            
+        })
+        
+        let imageButton = CPNowPlayingImageButton(image: #imageLiteral(resourceName: "musicDefault"), handler: { _ in
+            
+        })
+        
+        let addLibrary = CPNowPlayingAddToLibraryButton(handler: { _ in
+            
+        })
+        
+        let more2 = CPNowPlayingMoreButton(handler: { _ in
+            
+        })
+        
+        nowPlaying.updateNowPlayingButtons([rate,more,shuffle,repeatButton,imageButton,addLibrary,more2])
         
     }
     
