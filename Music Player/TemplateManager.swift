@@ -223,8 +223,13 @@ extension TemplateManager {
     
     // MARK: - genresTemplate (CPListTemplate)
     private func genresTemplate() -> CPListTemplate {
+        var template = CPListTemplate(title: "", sections: [])
+        var playingList: [CPListItem] = []
+        var isPlaying: Bool = false
+        
         let reggae = CPListItem(text: "Reggea", detailText: "Relax and feel good.")
         reggae.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
         
         let jazz = CPListItem(text: "Jazz", detailText: "How about some smooth jazz.")
         jazz.setImage(#imageLiteral(resourceName: "musicDefault"))
@@ -238,7 +243,99 @@ extension TemplateManager {
         let songCharts = CPListItem(text: "Check the Top Song Charts", detailText: "See what's trending.")
         songCharts.setImage(#imageLiteral(resourceName: "musicDefault"))
         
-        let template = CPListTemplate(title: "Genres", sections: [CPListSection(items: [reggae, jazz, alternative, hipHop, songCharts])])
+        
+        var genres = [reggae, jazz, alternative, hipHop, songCharts]
+        
+        
+        let listSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+        
+        reggae.handler = { item, completion in
+            isPlaying = false
+            if !playingList.contains(reggae) && !isPlaying {
+                playingList.removeAll()
+                playingList.append(reggae)
+                genres.removeFirst()
+                isPlaying = true
+                playingList.first?.isPlaying = true
+            }
+            
+            let nowPlayingSection = CPListSection(items: playingList, header: "Now Playing", sectionIndexTitle: "Music")
+            let newListSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+            
+            template.updateSections([nowPlayingSection, newListSection])
+            completion()
+        }
+        
+        jazz.handler = { item, completion in
+            isPlaying = false
+            if !playingList.contains(jazz) && !isPlaying {
+                playingList.removeAll()
+                playingList.append(jazz)
+                genres.removeFirst()
+                isPlaying = true
+                playingList.first?.isPlaying = true
+            }
+            
+            let nowPlayingSection = CPListSection(items: playingList, header: "Now Playing", sectionIndexTitle: "Music")
+            let newListSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+            
+            template.updateSections([nowPlayingSection, newListSection])
+            completion()
+        }
+        
+        alternative.handler = { item, completion in
+            isPlaying = false
+            if !playingList.contains(alternative) && !isPlaying {
+                playingList.removeAll()
+                playingList.append(alternative)
+                genres.removeFirst()
+                isPlaying = true
+                playingList.first?.isPlaying = true
+            }
+            
+            let nowPlayingSection = CPListSection(items: playingList, header: "Now Playing", sectionIndexTitle: "Music")
+            let newListSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+            
+            template.updateSections([nowPlayingSection, newListSection])
+            completion()
+        }
+        
+        hipHop.handler = { item, completion in
+            isPlaying = false
+            if !playingList.contains(hipHop) && !isPlaying {
+                playingList.removeAll()
+                playingList.append(hipHop)
+                genres.removeFirst()
+                isPlaying = true
+                playingList.first?.isPlaying = true
+            }
+            
+            let nowPlayingSection = CPListSection(items: playingList, header: "Now Playing", sectionIndexTitle: "Music")
+            let newListSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+            
+            template.updateSections([nowPlayingSection, newListSection])
+            completion()
+        }
+        
+        songCharts.handler = { item, completion in
+            isPlaying = false
+            if !playingList.contains(songCharts) && !isPlaying {
+                playingList.removeAll()
+                playingList.append(songCharts)
+                genres.removeFirst()
+                isPlaying = true
+                playingList.first?.isPlaying = true
+            }
+            
+            let nowPlayingSection = CPListSection(items: playingList, header: "Now Playing", sectionIndexTitle: "Music")
+            let newListSection = CPListSection(items: genres, header: "Next From: Genres", sectionIndexTitle: "Genres")
+            
+            template.updateSections([nowPlayingSection, newListSection])
+            completion()
+        }
+        
+        
+        template = CPListTemplate(title: "Genres", sections: [listSection])
         template.tabImage = UIImage(systemName: "music.note.list")
         return template
         
