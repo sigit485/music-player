@@ -249,12 +249,14 @@ extension TemplateManager {
     private func settingsTemplate() -> CPListTemplate {
         let musicItem = CPListItem(text: "Use Apple Music", detailText: "Decide whether to enable it.")
         musicItem.handler = { listItem, completion in
-            
+         completion()
         }
+        
         let musicSection = CPListSection(items: [musicItem], header: "Music", sectionIndexTitle: "Apple Music")
         
         let contentItem = CPListItem(text: "Allow Explicit Content", detailText: "Decide whether to enable it.")
         contentItem.handler = { listItem, completion in
+            completion()
         }
         let contentSection = CPListSection(items: [contentItem], header: "Content", sectionIndexTitle: "Music Content")
         
