@@ -31,7 +31,9 @@ class TemplateManager: NSObject {
         sessionConfiguration = CPSessionConfiguration(delegate: self)
         
         
-        let tabBarTemplate = CPTabBarTemplate(templates: [displayHome(), gridTemplate()])
+        let tabBarTemplate = CPTabBarTemplate(templates: [displayHome(), gridTemplate(), genresTemplate(), settingsTemplate()])
+        
+        tabBarTemplate.delegate = self
         
         nowPlayingTemplate()
         
@@ -71,6 +73,7 @@ extension TemplateManager: CPSessionConfigurationDelegate {
     }
 }
 
+// MARK: - CPNowPlayingTemplateObserver
 extension TemplateManager: CPNowPlayingTemplateObserver {
     func nowPlayingTemplateUpNextButtonTapped(_ nowPlayingTemplate: CPNowPlayingTemplate) {
         print("option is tapped")
@@ -78,6 +81,13 @@ extension TemplateManager: CPNowPlayingTemplateObserver {
     
     func nowPlayingTemplateAlbumArtistButtonTapped(_ nowPlayingTemplate: CPNowPlayingTemplate) {
         print("title album is tapped")
+    }
+}
+
+// MARK: - CPTabBarTemplateDelegate
+extension TemplateManager: CPTabBarTemplateDelegate {
+    func tabBarTemplate(_ tabBarTemplate: CPTabBarTemplate, didSelect selectedTemplate: CPTemplate) {
+        print("selected TabBar \(selectedTemplate.tabTitle)")
     }
 }
 
@@ -157,6 +167,10 @@ extension TemplateManager {
         }
         
         let playlistTemp = CPListTemplate(title: name, sections: [CPListSection(items: listItems)])
+        let buttons = CPBarButton(title: "Queue") { _ in
+            
+        }
+        playlistTemp.trailingNavigationBarButtons = [buttons]
         //playlistTemp.tabImage = #imageLiteral(resourceName: "home")
         print("CPListTemplate.maximumItemCount: \(CPListTemplate.maximumItemCount)")
         print("CPListTemplate.maximumSectionCount: \(CPListTemplate.maximumSectionCount)")
@@ -205,6 +219,48 @@ extension TemplateManager {
         
         nowPlaying.updateNowPlayingButtons([rate,more,shuffle,repeatButton,imageButton,addLibrary,more2])
         
+    }
+    
+    // MARK: - genresTemplate (CPListTemplate)
+    private func genresTemplate() -> CPListTemplate {
+        let reggae = CPListItem(text: "Reggea", detailText: "Relax and feel good.")
+        reggae.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
+        let jazz = CPListItem(text: "Jazz", detailText: "How about some smooth jazz.")
+        jazz.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
+        let alternative = CPListItem(text: "Alternative", detailText: "Catch a vibe.")
+        alternative.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
+        let hipHop = CPListItem(text: "Hip-Hop", detailText: "Play the latest jams.")
+        hipHop.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
+        let songCharts = CPListItem(text: "Check the Top Song Charts", detailText: "See what's trending.")
+        songCharts.setImage(#imageLiteral(resourceName: "musicDefault"))
+        
+        let template = CPListTemplate(title: "Genres", sections: [CPListSection(items: [reggae, jazz, alternative, hipHop, songCharts])])
+        template.tabImage = UIImage(systemName: "music.note.list")
+        return template
+        
+    }
+    
+    
+    // MARK: - settingsTemplate (CPListTemplate)
+    private func settingsTemplate() -> CPListTemplate {
+        let musicItem = CPListItem(text: "Use Apple Music", detailText: "Decide whether to enable it.")
+        musicItem.handler = { listItem, completion in
+            
+        }
+        let musicSection = CPListSection(items: [musicItem], header: "Music", sectionIndexTitle: "Apple Music")
+        
+        let contentItem = CPListItem(text: "Allow Explicit Content", detailText: "Decide whether to enable it.")
+        contentItem.handler = { listItem, completion in
+        }
+        let contentSection = CPListSection(items: [contentItem], header: "Content", sectionIndexTitle: "Music Content")
+        
+        let template = CPListTemplate(title: "Settings", sections: [musicSection, contentSection])
+        template.tabImage = UIImage(systemName: "gear")
+        return template
     }
     
 }
